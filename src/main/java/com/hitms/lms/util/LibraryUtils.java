@@ -32,6 +32,16 @@ public class LibraryUtils {
     }
 
     /**
+     * Finds a member by their ID.
+     *
+     * @param id the ID of the member to find
+     */
+    public static void findMemberById(int id) {
+        System.out.println("Finding member with ID: " + id);
+        // Test method which will be completed later
+    }
+
+    /**
      * Returns the number of whole days between two dates.
      */
     public static long daysBetween(LocalDate date1, LocalDate date2) {
