@@ -6,8 +6,10 @@ package com.hitms.lms;
 public class LibraryService {
 
     /**
-     * Issues one copy of the given title and returns the copies remaining;
-     * throws BookUnavailableException if no copies are left.
+     * Issues one copy of the given title and returns the copies remaining.
+     *
+     * <p>Throws {@link BookUnavailableException} when no copies are left in the
+     * catalogue, so the caller cannot ignore the failure.</p>
      *
      * @param availableCopies the number of copies available for the title
      * @param title the title of the book to issue
