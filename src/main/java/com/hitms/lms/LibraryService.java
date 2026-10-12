@@ -1,31 +1,53 @@
 package com.hitms.lms;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Provides services for issuing books from the library catalogue.
+ * Provides services for adding, issuing, and returning books
+ * in the library catalogue.
  */
 public class LibraryService {
 
+    private final Map<String, Integer> catalogue = new HashMap<>();
+
     /**
-     * Issues one copy of the given title and returns the copies remaining.
+     * Adds copies of a book to the catalogue.
      *
-     * <p>Throws {@link BookUnavailableException} when no copies are left in the
-     * catalogue, so the caller cannot ignore the failure.</p>
-     *
-     * @param availableCopies the number of copies available for the title
-     * @param title the title of the book to issue
-     * @return the number of copies available after issuing one copy
-     * @throws BookUnavailableException if no copies are available
+     * @param title the title of the book to add
+     * @param copies the number of copies to add
+     * @return the total number of copies available
      */
-    public static int issueBook(int availableCopies, String title)
-            throws BookUnavailableException {
-
-        if (availableCopies <= 0) {
-            throw new BookUnavailableException(
-                    "'" + title + "' has no copies available."
-            );
-        }
-
-        return availableCopies - 1;
+    public int addBook(String title, int copies) {
+        catalogue.merge(title, copies, Integer::sum);
+        return catalogue.get(title);
     }
 
+    /**
+     * Issues one copy of a book from the catalogue.
+     *
+     * @param title the title of the book to issue
+     * @return the number of copies remaining
+     * @throws BookUnavailableException if no copies are available
+     */
+    public int issueBook(String title) throws BookUnavailableException {
+        if (catalogue.getOrDefault(title, 0) <= 0) {
+            throw new BookUnavailableException("'" + title + "' has no copies available.");
+        }
+
+        catalogue.merge(title, -1, Integer::sum);
+
+        return catalogue.get(title);
+    }
+
+    /**
+     * Returns one copy of a book to the catalogue.
+     *
+     * @param title the title of the book being returned
+     * @return the total number of copies available
+     */
+    public int returnBook(String title) {
+        catalogue.merge(title, 1, Integer::sum);
+        return catalogue.get(title);
+    }
 }

@@ -2,14 +2,13 @@ package com.hitms.lms;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BookUnavailableException {
+        LibraryService service = new LibraryService();
+
+        System.out.println("Remaining copies: " + service.issueBook("Clean Code"));
+
         try {
-            System.out.println(
-                    "Remaining copies: " + LibraryService.issueBook(3, "Clean Code")
-            );
-
-            LibraryService.issueBook(0, "Clean Code");
-
+            service.issueBook("Never Added");
         } catch (BookUnavailableException e) {
             System.out.println("Transaction failed: " + e.getMessage());
         }
