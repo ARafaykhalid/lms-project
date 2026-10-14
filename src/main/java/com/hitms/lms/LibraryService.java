@@ -50,4 +50,36 @@ public class LibraryService {
         catalogue.merge(title, 1, Integer::sum);
         return catalogue.get(title);
     }
+
+    /**
+     * Removes a title from the catalogue entirely.
+     *
+     * @param title the title to remove
+     * @return true if the title was in the catalogue
+     */
+    public boolean removeBook(String title) {
+        return catalogue.remove(title) != null;
+    }
+
+    /**
+     * Returns a snapshot of the catalogue as title to available copies.
+     *
+     * <p>The returned map is a copy, so changing it does not change the
+     * catalogue.</p>
+     *
+     * @return an unmodifiable snapshot of the catalogue
+     */
+    public Map<String, Integer> catalogue() {
+        return Map.copyOf(catalogue);
+    }
+
+    /**
+     * Returns how many copies are available for a title, or 0 if absent.
+     *
+     * @param title the title to look up
+     * @return the number of copies currently available
+     */
+    public int copiesOf(String title) {
+        return catalogue.getOrDefault(title, 0);
+    }
 }
