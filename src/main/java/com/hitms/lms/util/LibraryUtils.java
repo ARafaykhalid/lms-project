@@ -9,6 +9,13 @@ import java.time.temporal.ChronoUnit;
 public class LibraryUtils {
 
     /**
+     * Prevents instantiation of this utility class.
+     */
+    private LibraryUtils() {
+        // Utility class.
+    }
+
+    /**
      * Formats a book title into the standard library title format.
      *
      * @param title the book title to format
